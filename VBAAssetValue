@@ -1,0 +1,22 @@
+Function AssetValue(quantity As Double, ticker As String)
+    
+    Dim url As String, price As Double
+    
+    'url we are receiving the stock price from. Appends ticker to the end of the url, then appends "&f=l1". The l1 specifies the price of the last trade. Key here http://tinyurl.com/YahooKey
+
+    url = "http://download.finance.yahoo.com/d/quotes.csv?s=" & ticker & "&f=l1"
+
+    'Creating an object and run a GET request of the data at url. Store the resulting price returned in the price variable.
+
+    Set http = CreateObject("MSXML2.XMLHTTP")
+    http.Open "GET", url, False
+    http.Send
+    price = http.responseText
+    
+   
+    AssetValue = price * quantity
+
+    'Freeing memory
+    Set http = Nothing
+ 
+End Function
